@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envsend-worker
+  namespace: envsend
+  labels:
+    app: envsend-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: envsend-worker
+  template:
+    metadata:
+      labels:
+        app: envsend-worker
+    spec:
+      containers:
+      - name: worker
+        image: localhost:5000/envsend-worker:latest
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: envsend-config
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: envsend-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: envsend-secrets
+              key: redis-url
+        - name: S3_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: envsend-secrets
+              key: s3-endpoint
+        - name: S3_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: envsend-secrets
+              key: s3-access-key
+        - name: S3_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: envsend-secrets
+              key: s3-secret-key
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"

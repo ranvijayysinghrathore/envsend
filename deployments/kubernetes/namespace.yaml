@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: envsend
+  labels:
+    name: envsend
+    environment: production

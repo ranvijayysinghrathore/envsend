@@ -1,0 +1,21 @@
+# Multi-stage build for CLI
+FROM golang:1.21-alpine AS builder
+
+RUN apk add --no-cache git make
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+# Build for multiple platforms
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o envsend-linux-amd64 ./cli
+RUN CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o envsend-darwin-amd64 ./cli
+RUN CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o envsend-windows-amd64.exe ./cli
+
+# Final stage - just copy binaries
+FROM scratch
+
+COPY --from=builder /app/envsend-* /

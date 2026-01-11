@@ -60,9 +60,23 @@ func FetchGitHubSSHKey(username string) (string, error) {
 		return "", fmt.Errorf("user %s has no SSH keys on GitHub", username)
 	}
 
-	// Return the first key (users can have multiple)
-	// TODO: Allow user to select which key to use
-	return keys[0].Key, nil
+	// Iterate through keys to find a supported one (ssh-ed25519)
+	for _, k := range keys {
+		if strings.HasPrefix(k.Key, "ssh-ed25519") {
+			return k.Key, nil
+		}
+	}
+
+	// If we get here, we found keys but none were Ed25519
+	var foundTypes []string
+	for _, k := range keys {
+		parts := strings.Fields(k.Key)
+		if len(parts) > 0 {
+			foundTypes = append(foundTypes, parts[0])
+		}
+	}
+
+	return "", fmt.Errorf("user %s has %d key(s) (%v), but none are 'ssh-ed25519'. EnvSend requires Ed25519 keys for security", username, len(keys), foundTypes)
 }
 
 // GitLabPublicKey represents a GitLab user's SSH public key.
@@ -116,8 +130,23 @@ func FetchGitLabSSHKey(username string) (string, error) {
 		return "", fmt.Errorf("user %s has no SSH keys on GitLab", username)
 	}
 
-	// Return the first key
-	return keys[0].Key, nil
+	// Iterate through keys to find a supported one (ssh-ed25519)
+	for _, k := range keys {
+		if strings.HasPrefix(k.Key, "ssh-ed25519") {
+			return k.Key, nil
+		}
+	}
+
+	// If we get here, we found keys but none were Ed25519
+	var foundTypes []string
+	for _, k := range keys {
+		parts := strings.Fields(k.Key)
+		if len(parts) > 0 {
+			foundTypes = append(foundTypes, parts[0])
+		}
+	}
+
+	return "", fmt.Errorf("user %s has %d key(s) (%v), but none are 'ssh-ed25519'. EnvSend requires Ed25519 keys for security", username, len(keys), foundTypes)
 }
 
 // FetchSSHKey fetches an SSH public key based on the recipient identifier.

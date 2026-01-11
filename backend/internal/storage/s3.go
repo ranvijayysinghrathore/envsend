@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/yourusername/envsend/backend/internal/config"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/config"
 )
 
 // S3Storage handles encrypted blob storage in MinIO/S3.

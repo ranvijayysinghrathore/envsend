@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/yourusername/envsend/backend/internal/middleware"
-	"github.com/yourusername/envsend/backend/internal/models"
-	"github.com/yourusername/envsend/backend/internal/services"
+
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/models"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/services"
 )
 
 // SecretsHandler handles secret-related HTTP requests.

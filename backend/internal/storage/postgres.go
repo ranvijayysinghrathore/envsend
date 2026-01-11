@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
-	"github.com/yourusername/envsend/backend/internal/models"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/models"
 )
 
 // PostgresRepository handles database operations for secrets and audit logs.
@@ -28,6 +28,14 @@ func NewPostgresRepository(databaseURL string) (*PostgresRepository, error) {
 	if err := db.Ping(); err != nil {
 		return nil, fmt.Errorf("failed to ping database: %w", err)
 	}
+
+	// Production Tuning: Connection Pool Settings
+	// Limit max open connections to prevent crashing the database (e.g., max connections limit on RDS/Render)
+	db.SetMaxOpenConns(25)
+	// Keep a pool of idle connections ready for fast access
+	db.SetMaxIdleConns(25)
+	// Recycle connections every 5 minutes to prevent stale connection issues
+	db.SetConnMaxLifetime(5 * time.Minute)
 
 	return &PostgresRepository{db: db}, nil
 }

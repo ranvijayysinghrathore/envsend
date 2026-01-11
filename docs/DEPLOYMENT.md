@@ -20,7 +20,7 @@
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/envsend.git
+git clone https://github.com/ranvijayysinghrathore/envsend.git
 cd envsend
 ```
 

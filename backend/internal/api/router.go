@@ -1,16 +1,17 @@
 package api
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
-	"github.com/yourusername/envsend/backend/internal/api/handlers"
-	mw "github.com/yourusername/envsend/backend/internal/api/middleware"
-	"github.com/yourusername/envsend/backend/internal/config"
-	"github.com/yourusername/envsend/backend/internal/services"
-	"github.com/yourusername/envsend/backend/internal/storage"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/api/handlers"
+	mw "github.com/ranvijayysinghrathore/envsend/backend/internal/api/middleware"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/config"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/services"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/storage"
 )
 
 // NewRouter creates and configures the HTTP router.

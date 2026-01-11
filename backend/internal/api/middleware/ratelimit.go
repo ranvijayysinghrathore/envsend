@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/yourusername/envsend/backend/internal/storage"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/storage"
 )
 
 // RateLimiter creates a rate limiting middleware.

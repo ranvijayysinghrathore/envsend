@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/yourusername/envsend/cli/cmd"
+	"github.com/ranvijayysinghrathore/envsend/cli/cmd"
 )
 
 var (

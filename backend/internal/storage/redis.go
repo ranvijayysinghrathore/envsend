@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/yourusername/envsend/backend/internal/config"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/config"
 )
 
 // RedisClient handles Redis operations for rate limiting and caching.
@@ -24,6 +24,11 @@ func NewRedisClient(cfg config.RedisConfig) (*RedisClient, error) {
 	if cfg.Password != "" {
 		opt.Password = cfg.Password
 	}
+
+	// Production Tuning: Connection Pool Settings
+	opt.PoolSize = 20
+	opt.MinIdleConns = 10
+	opt.ConnMaxIdleTime = 5 * time.Minute
 
 	client := redis.NewClient(opt)
 

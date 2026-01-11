@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/yourusername/envsend/backend/internal/models"
-	"github.com/yourusername/envsend/backend/internal/storage"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/models"
+	"github.com/ranvijayysinghrathore/envsend/backend/internal/storage"
 )
 
 // SecretService handles business logic for secrets.

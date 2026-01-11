@@ -23,7 +23,7 @@
 curl -sSL https://envsend.io/install.sh | bash
 
 # Or build from source
-git clone https://github.com/yourusername/envsend.git
+git clone https://github.com/ranvijayysinghrathore/envsend.git
 cd envsend
 make build-cli
 sudo make install-cli
@@ -47,7 +47,11 @@ envsend .env --ssh github:username
 # Pipe support
 cat .env | envsend
 
-# Receive a secret
+# Receive a secret (Smart Mode - detect URL automatically)
+envsend "http://localhost:8080/s/..." > .env
+
+# Legacy receive command
+envsend receive "http://localhost:8080/s/..." > .env
 envreceive https://envsend.io/s/abc123#key > .env
 ```
 

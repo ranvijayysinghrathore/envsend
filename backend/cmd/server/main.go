@@ -41,11 +41,7 @@ func main() {
 	log.Println("✓ Connected to Redis")
 
 	// Initialize blob storage (S3 or Local Disk)
-	var blobStorage interface {
-		UploadEncryptedBlob(ctx context.Context, data []byte) (string, error)
-		DownloadEncryptedBlob(ctx context.Context, objectURL string) ([]byte, error)
-		DeleteEncryptedBlob(ctx context.Context, objectURL string) error
-	}
+	var blobStorage storage.BlobStorage
 
 	if cfg.S3.Endpoint == "" {
 		// Use local disk storage (free tier)

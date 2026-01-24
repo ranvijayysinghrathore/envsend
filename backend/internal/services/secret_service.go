@@ -14,15 +14,15 @@ import (
 // SecretService handles business logic for secrets.
 type SecretService struct {
 	postgres *storage.PostgresRepository
-	s3       *storage.S3Storage
+	blob     storage.BlobStorage
 	redis    *storage.RedisClient
 }
 
 // NewSecretService creates a new secret service.
-func NewSecretService(postgres *storage.PostgresRepository, s3 *storage.S3Storage, redis *storage.RedisClient) *SecretService {
+func NewSecretService(postgres *storage.PostgresRepository, blob storage.BlobStorage, redis *storage.RedisClient) *SecretService {
 	return &SecretService{
 		postgres: postgres,
-		s3:       s3,
+		blob:     blob,
 		redis:    redis,
 	}
 }
@@ -42,7 +42,7 @@ func (s *SecretService) CreateSecret(ctx context.Context, req models.CreateSecre
 	}
 
 	// Upload encrypted blob to S3
-	blobURL, err := s.s3.UploadEncryptedBlob(ctx, encryptedData)
+	blobURL, err := s.blob.UploadEncryptedBlob(ctx, encryptedData)
 	if err != nil {
 		return nil, fmt.Errorf("failed to upload blob: %w", err)
 	}
@@ -69,7 +69,7 @@ func (s *SecretService) CreateSecret(ctx context.Context, req models.CreateSecre
 	// Save to database
 	if err := s.postgres.CreateSecret(ctx, secret); err != nil {
 		// Cleanup: delete uploaded blob
-		_ = s.s3.DeleteEncryptedBlob(ctx, blobURL)
+		_ = s.blob.DeleteEncryptedBlob(ctx, blobURL)
 		return nil, fmt.Errorf("failed to save secret: %w", err)
 	}
 
@@ -134,7 +134,7 @@ func (s *SecretService) GetSecret(ctx context.Context, secretID string, ipAddres
 	}
 
 	// Download encrypted blob
-	encryptedData, err := s.s3.DownloadEncryptedBlob(ctx, secret.EncryptedBlobURL)
+	encryptedData, err := s.blob.DownloadEncryptedBlob(ctx, secret.EncryptedBlobURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to download blob: %w", err)
 	}
@@ -183,7 +183,7 @@ func (s *SecretService) DeleteSecret(ctx context.Context, secretID string) error
 	}
 
 	// Delete encrypted blob from S3
-	if err := s.s3.DeleteEncryptedBlob(ctx, secret.EncryptedBlobURL); err != nil {
+	if err := s.blob.DeleteEncryptedBlob(ctx, secret.EncryptedBlobURL); err != nil {
 		// Log error but continue with database deletion
 		fmt.Printf("Warning: failed to delete blob: %v\n", err)
 	}

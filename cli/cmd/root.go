@@ -15,7 +15,7 @@ var (
 
 	// DefaultServerURL is the default server URL.
 	// It can be overridden at build time using -ldflags.
-	DefaultServerURL = "http://localhost:8080"
+	DefaultServerURL = "https://envsend.onrender.com"
 )
 
 // rootCmd represents the base command

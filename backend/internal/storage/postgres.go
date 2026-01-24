@@ -37,7 +37,14 @@ func NewPostgresRepository(databaseURL string) (*PostgresRepository, error) {
 	// Recycle connections every 5 minutes to prevent stale connection issues
 	db.SetConnMaxLifetime(5 * time.Minute)
 
-	return &PostgresRepository{db: db}, nil
+	repo := &PostgresRepository{db: db}
+
+	// Run migrations automatically
+	if err := RunMigrations(db); err != nil {
+		return nil, fmt.Errorf("failed to run migrations: %w", err)
+	}
+
+	return repo, nil
 }
 
 // Close closes the database connection.

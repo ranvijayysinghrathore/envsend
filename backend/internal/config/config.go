@@ -100,12 +100,12 @@ func Load() (*Config, error) {
 			Password: getEnv("REDIS_PASSWORD", ""),
 		},
 		S3: S3Config{
-			Endpoint:  getEnv("S3_ENDPOINT", "localhost:9000"),
-			AccessKey: getEnv("S3_ACCESS_KEY", "minioadmin"),
-			SecretKey: getEnv("S3_SECRET_KEY", "minioadmin"),
-			Bucket:    getEnv("S3_BUCKET", "envsend-secrets"),
+			Endpoint:  getEnv("S3_ENDPOINT", ""),
+			AccessKey: getEnv("S3_ACCESS_KEY", ""),
+			SecretKey: getEnv("S3_SECRET_KEY", ""),
+			Bucket:    getEnv("S3_BUCKET", "local"),
 			UseSSL:    getEnvAsBool("S3_USE_SSL", false),
-			Region:    getEnv("S3_REGION", "us-east-1"),
+			Region:    getEnv("S3_REGION", ""),
 		},
 		Security: SecurityConfig{
 			RateLimitRequests: getEnvAsInt("RATE_LIMIT_REQUESTS", 100),

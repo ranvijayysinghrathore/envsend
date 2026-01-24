@@ -40,14 +40,33 @@ func main() {
 	defer redis.Close()
 	log.Println("✓ Connected to Redis")
 
-	s3, err := storage.NewS3Storage(cfg.S3)
-	if err != nil {
-		log.Fatalf("Failed to connect to MinIO/S3: %v", err)
+	// Initialize blob storage (S3 or Local Disk)
+	var blobStorage interface {
+		UploadEncryptedBlob(ctx context.Context, data []byte) (string, error)
+		DownloadEncryptedBlob(ctx context.Context, objectURL string) ([]byte, error)
+		DeleteEncryptedBlob(ctx context.Context, objectURL string) error
 	}
-	log.Println("✓ Connected to MinIO/S3")
+
+	if cfg.S3.Endpoint == "" {
+		// Use local disk storage (free tier)
+		localStorage, err := storage.NewLocalStorage()
+		if err != nil {
+			log.Fatalf("Failed to initialize local storage: %v", err)
+		}
+		blobStorage = localStorage
+		log.Println("✓ Using local disk storage")
+	} else {
+		// Use S3/MinIO
+		s3Storage, err := storage.NewS3Storage(cfg.S3)
+		if err != nil {
+			log.Fatalf("Failed to connect to MinIO/S3: %v", err)
+		}
+		blobStorage = s3Storage
+		log.Println("✓ Connected to MinIO/S3")
+	}
 
 	// Initialize services
-	secretService := services.NewSecretService(postgres, s3, redis)
+	secretService := services.NewSecretService(postgres, blobStorage, redis)
 	log.Println("✓ Initialized services")
 
 	// Create router

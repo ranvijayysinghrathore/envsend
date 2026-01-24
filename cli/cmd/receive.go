@@ -114,10 +114,92 @@ func runReceive(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return fmt.Errorf("decryption failed (wrong passphrase?): %w", err)
 		}
+		return handlePlaintextOutput(plaintext, outputFile, resp.ViewsRemaining)
 
 	case "x25519":
 		// SSH-based decryption
 		return fmt.Errorf("SSH-based decryption not yet implemented")
+
+	case "shamir":
+		// Shamir Secret Sharing decryption
+		fmt.Printf("☢️  SHAMIR SECRET SHARING DETECTED\n")
+
+		var shares []crypto.ShamirShare
+
+		// Process initial share from URL if present
+		if fragment != "" && strings.HasPrefix(fragment, "s") {
+			parts := strings.SplitN(fragment[1:], "-", 2)
+			if len(parts) == 2 {
+				var index int
+				fmt.Sscanf(parts[0], "%d", &index)
+				shares = append(shares, crypto.ShamirShare{
+					Index: index,
+					Data:  parts[1],
+				})
+				fmt.Printf("✓ Share %d collected from URL\n", index)
+			}
+		}
+
+		// Prompt for additional shares until we can decrypt
+		for {
+			if len(shares) >= 2 { // Min threshold for Shamir is usually 2
+				// Try combining and decrypting
+				plaintext, err = crypto.DecryptWithShamir(resp.EncryptedBlob, metadata, shares)
+				if err == nil {
+					// Success!
+					return handlePlaintextOutput(plaintext, outputFile, resp.ViewsRemaining)
+				}
+				if verbose {
+					fmt.Fprintf(os.Stderr, "Not enough shares yet (or invalid shares): %v\n", err)
+				}
+			}
+			fmt.Printf("Need more shares. Collected: %d\n", len(shares))
+			input, err := utils.PromptUser("Enter next share key (part after #): ")
+			if err != nil {
+				return fmt.Errorf("failed to read share: %w", err)
+			}
+			input = strings.TrimSpace(input)
+			if input == "" {
+				return fmt.Errorf("decryption aborted: not enough shares")
+			}
+
+			// Clean input (in case they pasted the whole URL)
+			if idx := strings.LastIndex(input, "#"); idx != -1 {
+				input = input[idx+1:]
+			}
+
+			if !strings.HasPrefix(input, "s") {
+				fmt.Println("❌ Invalid share format. Expected 's1-base64...'")
+				continue
+			}
+
+			parts := strings.SplitN(input[1:], "-", 2)
+			if len(parts) == 2 {
+				var index int
+				fmt.Sscanf(parts[0], "%d", &index)
+				
+				// Check for duplicates
+				duplicate := false
+				for _, s := range shares {
+					if s.Index == index {
+						duplicate = true
+						break
+					}
+				}
+				if duplicate {
+					fmt.Printf("⚠️  Share %d already collected. Please provide a different share.\n", index)
+					continue
+				}
+
+				shares = append(shares, crypto.ShamirShare{
+					Index: index,
+					Data:  parts[1],
+				})
+				fmt.Printf("✓ Share %d collected\n", index)
+			} else {
+				fmt.Println("❌ Invalid share format.")
+			}
+		}
 
 	case "none":
 		// Key-based decryption
@@ -129,16 +211,15 @@ func runReceive(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return fmt.Errorf("decryption failed: %w", err)
 		}
+		return handlePlaintextOutput(plaintext, outputFile, resp.ViewsRemaining)
 
 	default:
 		return fmt.Errorf("unsupported key derivation method: %s", metadata.KeyDerivation)
 	}
+}
 
+func handlePlaintextOutput(plaintext []byte, outputFile string, viewsRemaining int) error {
 	defer crypto.ZeroBytes(plaintext)
-
-	if verbose {
-		fmt.Fprintf(os.Stderr, "Decrypted %d bytes successfully\n", len(plaintext))
-	}
 
 	// Output plaintext
 	if outputFile != "" {
@@ -150,11 +231,12 @@ func runReceive(cmd *cobra.Command, args []string) error {
 		if err := utils.WriteToStdout(plaintext); err != nil {
 			return fmt.Errorf("failed to write to stdout: %w", err)
 		}
+		fmt.Println() // Add newline for console output
 	}
 
 	// Warn about remaining views
-	if resp.ViewsRemaining > 0 {
-		fmt.Fprintf(os.Stderr, "⚠️  Warning: %d view(s) remaining before destruction\n", resp.ViewsRemaining)
+	if viewsRemaining > 0 {
+		fmt.Fprintf(os.Stderr, "⚠️  Warning: %d view(s) remaining before destruction\n", viewsRemaining)
 	} else {
 		fmt.Fprintf(os.Stderr, "🔥 Secret has been destroyed (max views reached)\n")
 	}

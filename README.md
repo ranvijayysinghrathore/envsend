@@ -47,6 +47,10 @@ envsend .env --ssh github:username
 # Pipe support
 cat .env | envsend
 
+# ☢️ Nuclear Mode (Shamir Secret Sharing)
+# Split secret into 5 shares, requiring any 3 to decrypt
+envsend .env --shamir-shares 5 --shamir-threshold 3
+
 # Receive a secret (Smart Mode - detect URL automatically)
 envsend "http://localhost:8080/s/..." > .env
 
@@ -93,7 +97,7 @@ All encryption happens **client-side only**:
 - **Key Derivation**: Argon2id (OWASP recommended)
 - **Hashing**: BLAKE3
 - **Asymmetric Encryption**: X25519 (for SSH key exchange)
-- **Secret Sharing**: Shamir's Secret Sharing (advanced)
+- **Secret Sharing**: Shamir's Secret Sharing (The "Nuclear Code" mode)
 - **Memory Security**: Explicit zeroing after use
 
 ## Deployment
@@ -191,7 +195,7 @@ Built with:
 
 ## ⚠️ Security Disclosure
 
-Found a security issue? Please email security@envsend.io instead of opening a public issue.
+Found a security issue? Please contact us instead of opening a public issue.
 
 ---
 

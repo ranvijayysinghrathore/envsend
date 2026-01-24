@@ -10,6 +10,12 @@ Compression=lzma2
 SolidCompression=yes
 ChangesEnvironment=yes
 DisableProgramGroupPage=yes
+WizardStyle=modern
+UninstallDisplayIcon={app}\envsend.exe
+SetupIconFile=compiler:SetupClassicIcon.ico
+
+[Run]
+Filename: "powershell.exe"; Parameters: "-NoExit -Command ""Write-Host 'Welcome to EnvSend! Type envsend --help to get started.' -ForegroundColor Cyan; envsend --help"""; Description: "Launch EnvSend (Open Terminal)"; Flags: postinstall nowait skipifsilent
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

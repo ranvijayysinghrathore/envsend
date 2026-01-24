@@ -97,6 +97,9 @@ func EncryptWithShamir(plaintext []byte, threshold, totalShares int) (ciphertext
 		return "", metadata, nil, err
 	}
 
+	// Mark as Shamir
+	metadata.KeyDerivation = "shamir"
+
 	// Split key into shares
 	shares, err = SplitSecretShamir(key, threshold, totalShares)
 	if err != nil {

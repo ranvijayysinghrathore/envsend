@@ -35,6 +35,7 @@ Examples:
   envsend send .env --expires 30m --max-views 2
   envsend send .env --require-passphrase
   envsend send .env --ssh github:username
+  envsend send .env --shamir-shares 5 --shamir-threshold 3
   cat .env | envsend send`,
 	Args: cobra.MaximumNArgs(1),
 	RunE: runSend,
@@ -59,6 +60,16 @@ func runSend(cmd *cobra.Command, args []string) error {
 		filePath = args[0]
 	}
 
+	// Explicitly retrieve flags from the invoking command context
+	// This ensures it works whether called via 'send' subcommand or 'root' smart mode
+	expiresIn, _ = cmd.Flags().GetString("expires")
+	maxViews, _ = cmd.Flags().GetInt("max-views")
+	requirePassphrase, _ = cmd.Flags().GetBool("require-passphrase")
+	ipLock, _ = cmd.Flags().GetBool("ip-lock")
+	sshRecipient, _ = cmd.Flags().GetString("ssh")
+	shamirThreshold, _ = cmd.Flags().GetInt("shamir-threshold")
+	shamirShares, _ = cmd.Flags().GetInt("shamir-shares")
+
 	plaintext, err := utils.ReadFileOrStdin(filePath)
 	if err != nil {
 		return fmt.Errorf("failed to read input: %w", err)
@@ -74,9 +85,14 @@ func runSend(cmd *cobra.Command, args []string) error {
 	var metadata crypto.EncryptionMetadata
 	var encryptionKey []byte
 
+	var shamirSharesData []crypto.ShamirShare
 	if shamirThreshold > 0 && shamirShares > 0 {
 		// Shamir Secret Sharing mode
-		return fmt.Errorf("Shamir mode not yet implemented in this example")
+		var err error
+		encryptedBlob, metadata, shamirSharesData, err = crypto.EncryptWithShamir(plaintext, shamirThreshold, shamirShares)
+		if err != nil {
+			return fmt.Errorf("Shamir encryption failed: %w", err)
+		}
 	} else if sshRecipient != "" {
 		// SSH-based encryption
 		return runSSHEncryption(plaintext)
@@ -155,7 +171,17 @@ func runSend(cmd *cobra.Command, args []string) error {
 	fmt.Println("\n✅ Secret uploaded successfully!")
 	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
-	if requirePassphrase {
+	if shamirThreshold > 0 && shamirShares > 0 {
+		fmt.Printf("☢️  SHAMIR SECRET SHARING ENABLED (%d of %d required)\n", shamirThreshold, shamirShares)
+		fmt.Printf("🔗 Base URL: %s\n", resp.URL)
+		fmt.Println("\n🔑 SHARES (Distribution Required):")
+		for i, share := range shamirSharesData {
+			// Encode share index and data into a single string
+			shareKey := fmt.Sprintf("s%d-%s", share.Index, share.Data)
+			fmt.Printf("Share %d: %s#%s\n", i+1, resp.URL, shareKey)
+		}
+		fmt.Printf("\n⚠️  Recipients will need any %d of these %d shares to decrypt\n", shamirThreshold, shamirShares)
+	} else if requirePassphrase {
 		fmt.Printf("🔗 Share this link: %s\n", resp.URL)
 		fmt.Println("🔑 Recipient will need the passphrase you set")
 	} else {

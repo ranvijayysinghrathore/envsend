@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const (
@@ -114,7 +115,9 @@ func IsStdinPiped() bool {
 
 // PromptUser prompts the user for input and returns the response.
 func PromptUser(prompt string) (string, error) {
-	fmt.Fprint(os.Stderr, prompt)
+	fmt.Fprint(os.Stdout, prompt)
+	os.Stdout.Sync() // Force flush
+	
 	reader := bufio.NewReader(os.Stdin)
 	response, err := reader.ReadString('\n')
 	if err != nil {
@@ -122,26 +125,29 @@ func PromptUser(prompt string) (string, error) {
 	}
 
 	// Trim newline
-	response = response[:len(response)-1]
-	return response, nil
+	return strings.TrimSpace(response), nil
 }
 
 // PromptPassword prompts for a password without echoing.
 func PromptPassword(prompt string) (string, error) {
-	fmt.Fprint(os.Stderr, prompt)
-	
+	fmt.Fprintf(os.Stderr, "[DEBUG] Prompting: %s\n", prompt) // Debug to stderr
+	fmt.Fprint(os.Stdout, prompt)
+	os.Stdout.Sync()
+
 	// Note: This requires platform-specific implementation
 	// For production, use golang.org/x/term
 	reader := bufio.NewReader(os.Stdin)
 	password, err := reader.ReadString('\n')
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "[DEBUG] Error reading: %v\n", err)
 		return "", fmt.Errorf("failed to read password: %w", err)
 	}
 
+	fmt.Fprintf(os.Stderr, "[DEBUG] Read %d bytes: %q\n", len(password), password)
+
 	// Trim newline
-	password = password[:len(password)-1]
-	fmt.Fprintln(os.Stderr) // Print newline after password input
-	return password, nil
+	fmt.Fprintln(os.Stdout) // Print newline after password input
+	return strings.TrimSpace(password), nil
 }
 
 // FileExists checks if a file exists.

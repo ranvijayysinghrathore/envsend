@@ -162,18 +162,20 @@ sharedSecret, _ := curve25519.X25519(privateKey, recipientPublicKey)
 
 **Use Case**: Encrypt for specific person without shared passphrase
 
-### Mode 4: Shamir Secret Sharing (Advanced)
+### Mode 4: Shamir Secret Sharing (Nuclear Mode)
 
 **Flow**:
-1. Generate random encryption key
-2. Encrypt data with key
-3. Split key into N shares (threshold M)
-4. Distribute shares to multiple parties
-5. Any M shares can reconstruct the key
+1. Generate random 32-byte encryption key.
+2. Encrypt data with key using AES-256-GCM.
+3. Split key into $N$ shares with threshold $M$ using `hashicorp/vault/shamir`.
+4. The CLI provides $N$ unique share links.
+5. Each share link contains exactly one share in the fragment: `#s1-base64data`.
+6. Recipient initiates decryption with one link; the CLI then prompts for $M-1$ additional share keys.
+7. Once $M$ shares are collected, the key is reconstructed and data is decrypted.
 
-**Security**: Requires M-of-N shares to decrypt
+**Security**: Requires $M$-of-$N$ physical participants to cooperate. Shares never touch the server.
 
-**Use Case**: Multi-party approval, key escrow
+**Use Case**: Highly sensitive "Codes", multi-admin approval, disaster recovery keys.
 
 ## Security Properties
 

@@ -58,7 +58,7 @@ export default function InstallPage() {
                   Get the official highly-compressed installer for Windows 10/11.
                 </p>
                 <a 
-                  href="/download/EnvSendSetup.exe"
+                  href="https://github.com/ranvijayysinghrathore/envsend/releases/latest/download/EnvSendSetup.exe"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-black font-bold hover:bg-gray-200 transition-all active:scale-95"
                 >
                   <Download className="w-5 h-5" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { TerminalDemo } from "@/components/TerminalDemo";
+import { FeaturesBento } from "@/components/FeaturesBento";
 import { Download, Shield, Lock, Share2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -20,7 +21,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className="absolute bottom-[200px] left-0 right-0 flex justify-center items-end"
+            className="absolute bottom-[225px] left-0 right-0 flex justify-center items-end"
           >
             <svg 
               width="100%" 
@@ -152,26 +153,7 @@ export default function Home() {
 
         {/* Feature Grid */}
         <section id="features" className="max-w-6xl mx-auto mb-32">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((feature, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all overflow-hidden"
-              >
-                {/* <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-6 text-white/80 group-hover:scale-110 transition-transform">
-                  {feature.icon}
-                </div> */}
-                <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
-                <p className="text-white/50 leading-relaxed font-light text-sm">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+          <FeaturesBento />
         </section>
 
       </main>

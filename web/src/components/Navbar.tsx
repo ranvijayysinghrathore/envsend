@@ -23,8 +23,9 @@ export function Navbar() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
       
       <div className="max-w-7xl w-full mx-auto px-6 flex items-center justify-between relative z-10">
-        {/* Logo Text Only */}
-        <Link href="/" className="text-lg font-bold tracking-tight text-white/90 hover:text-white transition-colors">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-1 text-lg font-bold tracking-tight text-white/90 hover:text-white transition-colors">
+          <img src="/logo.png" alt="EnvSend" className="w-14 h-14 rounded-lg" />
           EnvSend
         </Link>
 

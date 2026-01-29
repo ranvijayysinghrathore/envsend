@@ -164,7 +164,7 @@ export default function InstallPage() {
                         <p className="text-white/40"># Build from source (requires Go 1.21+)</p>
                         <p>git clone https://github.com/ranvijayysinghrathore/envsend</p>
                         <p>cd envsend/cli</p>
-                        <p>go build -o /usr/local/bin/envsend .</p>
+                        <p>sudo go build -o /usr/local/bin/envsend .</p>
                       </div>
                     </div>
                   </div>

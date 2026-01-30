@@ -50,7 +50,7 @@ export default async function Image() {
             zIndex: 10,
           }}
         >
-          {/* Logo / Icon Placeholder if we had one, but text is strong */}
+          {/* Logo */}
           <div
             style={{
               display: 'flex',
@@ -59,13 +59,13 @@ export default async function Image() {
               marginBottom: 40,
             }}
           >
-             <div
+             <img
+              src="https://envsend.vercel.app/icon.png"
+              alt="EnvSend Logo"
+              width={60}
+              height={60}
               style={{
-                width: 60,
-                height: 60,
                 borderRadius: 12,
-                background: 'linear-gradient(135deg, #FF5500 0%, #CC4400 100%)',
-                boxShadow: '0 0 30px -10px rgba(255, 85, 0, 0.5)',
                 marginRight: 20,
               }}
             />

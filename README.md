@@ -177,15 +177,15 @@ make build
 - [API Reference](docs/API.md)
 - [Deployment Guide](docs/DEPLOYMENT.md)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) first.
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Built with:
 - [Cobra](https://github.com/spf13/cobra) - CLI framework
@@ -193,7 +193,7 @@ Built with:
 - [MinIO](https://min.io/) - Object storage
 - [BLAKE3](https://github.com/BLAKE3-team/BLAKE3) - Cryptographic hashing
 
-## ⚠️ Security Disclosure
+## Security Disclosure
 
 Found a security issue? Please contact us instead of opening a public issue.
 

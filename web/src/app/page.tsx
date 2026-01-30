@@ -2,6 +2,7 @@
 
 import { TerminalDemo } from "@/components/TerminalDemo";
 import { FeaturesBento } from "@/components/FeaturesBento";
+import { Footer } from "@/components/Footer";
 import { Download, Shield, Lock, Share2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -158,16 +159,7 @@ export default function Home() {
 
       </main>
       
-      <footer className="py-12 border-t border-white/[0.05]">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30">
-          <p>&copy; 2026 EnvSend. Open Source MIT.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="https://x.com/Ranvijayy_" className="hover:text-white transition-colors">Twitter</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -29,8 +29,8 @@ export default function RootLayout({
         <div className="bg-noise" />
         <Navbar />
         {children}
+        <Analytics />
       </body>
-      <Analytics />
     </html>
   );
 }

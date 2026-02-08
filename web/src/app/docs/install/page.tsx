@@ -10,7 +10,7 @@ export default function InstallPage() {
   const [activeTab, setActiveTab] = useState<"windows" | "mac" | "linux">("windows");
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-orange-500/30">
+    <div className="min-h-screen bg-black text-white selection:bg-orange-500/30 overflow-hidden">
       
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none">

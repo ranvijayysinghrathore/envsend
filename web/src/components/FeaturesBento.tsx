@@ -38,7 +38,7 @@ export function FeaturesBento() {
         <SpotlightCard key={i} className={feature.colSpan}>
           <div className={`absolute inset-0 ${feature.bgPattern} [mask-image:linear-gradient(to_bottom,white,transparent)]`} />
           
-          <div className="relative z-10 h-full flex flex-col justify-between p-8">
+          <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-8">
             <div>
               {/* <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-4 backdrop-blur-sm">
                 {feature.icon}

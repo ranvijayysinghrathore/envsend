@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 export default function CliDocsPage() {
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-black text-white selection:bg-cyan-500/30 overflow-hidden">
       
       {/* Ambient Background */}
       <div className="fixed inset-0 pointer-events-none">
@@ -16,10 +16,10 @@ export default function CliDocsPage() {
         <div className="absolute bottom-[10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen opacity-30" />
       </div>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
+      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20">
         
         {/* Header */}
-        <div className="max-w-3xl mb-20">
+        <div className="max-w-3xl mb-12 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -29,7 +29,7 @@ export default function CliDocsPage() {
               <Terminal className="w-3 h-3" />
               <span>CLI Reference v1.0</span>
             </div>
-            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">
               Master the <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Command Line</span>
             </h1>
             <p className="text-xl text-white/50 leading-relaxed max-w-2xl">
@@ -46,12 +46,12 @@ export default function CliDocsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-xl p-8 hover:border-white/20 transition-all"
+            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-xl p-6 md:p-8 hover:border-white/20 transition-all"
           >
             <div className="absolute top-0 right-0 p-8 opacity-50 group-hover:opacity-100 transition-opacity">
-              <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
+              {/* <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
                 <Share2 className="w-6 h-6" />
-              </div>
+              </div> */}
             </div>
             <h2 className="text-2xl font-bold mb-2">Send Secrets</h2>
             <p className="text-white/50 mb-8 max-w-sm">
@@ -70,12 +70,12 @@ export default function CliDocsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-xl p-8 hover:border-white/20 transition-all"
+            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A]/50 backdrop-blur-xl p-6 md:p-8 hover:border-white/20 transition-all"
           >
             <div className="absolute top-0 right-0 p-8 opacity-50 group-hover:opacity-100 transition-opacity">
-              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-500">
+              {/* <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-500">
                 <Download className="w-6 h-6" />
-              </div>
+              </div> */}
             </div>
             <h2 className="text-2xl font-bold mb-2">Receive Secrets</h2>
             <p className="text-white/50 mb-8 max-w-sm">
@@ -102,7 +102,7 @@ export default function CliDocsPage() {
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative rounded-3xl border border-green-500/20 bg-green-500/5 backdrop-blur-xl p-8 md:p-12 mb-24 overflow-hidden"
+          className="relative rounded-3xl border border-green-500/20 bg-green-500/5 backdrop-blur-xl p-6 md:p-12 mb-16 md:mb-24 overflow-hidden"
         >
           <div className="absolute -right-20 -top-20 w-96 h-96 bg-green-500/10 blur-[100px] rounded-full pointer-events-none" />
           
@@ -112,7 +112,7 @@ export default function CliDocsPage() {
                 <Shield className="w-3 h-3" />
                 Recommended Security
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Impossible to Breach</h2>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6">Impossible to Breach</h2>
               <p className="text-white/60 text-lg leading-relaxed mb-8">
                 For sensitive production secrets, encryption alone isn't enough. 
                 Use <code className="text-green-400">--require-passphrase</code> to add a second factor. 
@@ -161,7 +161,7 @@ export default function CliDocsPage() {
         {/* Advanced Features Grid */}
 
         {/* Advanced Features - Expanded */}
-        <div className="space-y-24 mb-20">
+        <div className="space-y-16 md:space-y-24 mb-12 md:mb-20">
           
           {/* Nuclear Mode (Shamir) */}
           <section id="shamir">
@@ -170,7 +170,7 @@ export default function CliDocsPage() {
                 <FileLock className="w-6 h-6" />
               </div>
               <div>
-                <h2 className="text-3xl font-bold">Nuclear Mode</h2>
+                <h2 className="text-2xl md:text-3xl font-bold">Nuclear Mode</h2>
                 <p className="text-sm text-red-400 font-mono mt-1">SHAMIR'S SECRET SHARING</p>
               </div>
             </div>
@@ -197,15 +197,15 @@ export default function CliDocsPage() {
                 <p className="text-sm text-white/40 mb-4">
                   Run the receive command with your share. The CLI will interactively ask for the remaining shares.
                 </p>
-                <div className="font-mono text-sm space-y-3 bg-black/40 p-4 rounded-lg border border-white/5 text-white/60">
-                  <div className="flex gap-2">
+                <div className="font-mono text-sm space-y-3 bg-black/40 p-4 rounded-lg border border-white/5 text-white/60 overflow-hidden">
+                  <div className="flex flex-wrap gap-2">
                     <span className="text-green-500">$</span>
-                    <span className="text-white">envsend "s1-..."</span>
+                    <span className="text-white break-all">envsend "s1-..."</span>
                   </div>
-                  <div className="text-yellow-400">☢️ SHAMIR SECRET SHARING DETECTED</div>
-                  <div className="flex gap-2">
+                  <div className="text-yellow-400 break-words">☢️ SHAMIR SECRET SHARING DETECTED</div>
+                  <div className="flex flex-wrap gap-2">
                     <span>Need more shares. Enter next share:</span>
-                    <span className="text-white">s3-...</span>
+                    <span className="text-white break-all">s3-...</span>
                   </div>
                   <div className="text-green-400">✅ Decrypted successfully!</div>
                 </div>
@@ -219,13 +219,13 @@ export default function CliDocsPage() {
               <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400">
                 <Key className="w-6 h-6" />
               </div>
-              <h2 className="text-3xl font-bold">Encrypted for Recipient</h2>
+              <h2 className="text-2xl md:text-3xl font-bold">Encrypted for Recipient</h2>
             </div>
             <p className="text-white/50 mb-8 max-w-2xl leading-relaxed">
               Encrypt a secret specifically for a GitHub or GitLab user using their public SSH keys. Only they can decrypt it.
             </p>
 
-            <div className="bg-[#0A0A0A]/50 border border-white/10 rounded-2xl p-8">
+            <div className="bg-[#0A0A0A]/50 border border-white/10 rounded-2xl p-6 md:p-8">
               <CommandBlock 
                 command="envsend .env --ssh github:username" 
                 label="Target Specific User"
@@ -253,7 +253,7 @@ export default function CliDocsPage() {
               <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400">
                 <Terminal className="w-6 h-6" />
               </div>
-              <h2 className="text-3xl font-bold">Piping & Automation</h2>
+              <h2 className="text-2xl md:text-3xl font-bold">Piping & Automation</h2>
             </div>
             <p className="text-white/50 mb-8 max-w-2xl leading-relaxed">
               EnvSend reads from <code>stdin</code> and writes to `stdout`, making it a powerful citizen in your shell pipelines.
@@ -295,7 +295,7 @@ function CommandBlock({ command, label, description, variant = "default" }: { co
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-0">
       {label && (
         <div className={clsx(
           "text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2",
@@ -305,14 +305,14 @@ function CommandBlock({ command, label, description, variant = "default" }: { co
         </div>
       )}
       <div className={clsx(
-        "relative flex items-center justify-between p-4 rounded-xl font-mono text-sm transition-all group",
+        "relative flex items-center justify-between p-4 rounded-xl font-mono text-sm transition-all group overflow-hidden",
         variant === "success" 
           ? "bg-green-500/10 border border-green-500/20 text-green-100" 
           : "bg-[#1A1A1A] border border-white/10 text-gray-300 hover:border-white/20"
       )}>
-        <div className="flex gap-3 overflow-x-auto scrollbar-none">
-           <span className={clsx("select-none", variant === "success" ? "text-green-400" : "text-cyan-500")}>$</span>
-           <span className="whitespace-nowrap">{command}</span>
+        <div className="flex gap-3 min-w-0 flex-1">
+           <span className={clsx("select-none shrink-0", variant === "success" ? "text-green-400" : "text-cyan-500")}>$</span>
+           <span className="whitespace-pre-wrap break-all">{command}</span>
         </div>
         <button 
           onClick={copy}

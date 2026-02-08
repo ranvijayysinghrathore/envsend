@@ -9,8 +9,8 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen flex flex-col">
-      <main className="flex-grow relative z-10 pt-32 pb-20 px-6">
+    <div className="relative min-h-screen flex flex-col overflow-hidden">
+      <main className="flex-grow relative z-10 pt-24 md:pt-32 pb-12 md:pb-20 px-6">
         
         {/* Planet Rise Glow & SVG Horizon */}
         <div className="absolute top-[4%] left-1/2 -translate-x-1/2 w-[140%] h-[800px] pointer-events-none select-none">
@@ -64,14 +64,14 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <section className="relative max-w-5xl mx-auto text-center mb-32">
+        <section className="relative max-w-5xl mx-auto text-center mb-20 md:mb-32">
           
           {/* Announcement Pill */}
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm text-xs font-medium text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-colors cursor-default"
+            className="inline-flex items-center gap-2 px-3 py-1 mb-6 md:mb-8 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm text-xs font-medium text-white/60 hover:text-white/90 hover:bg-white/[0.06] transition-colors cursor-default"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
             <span>New Version 1.0 Release</span>
@@ -83,7 +83,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight mb-8 leading-[1.1] text-balance"
+            className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-6 md:mb-8 leading-[1.1] text-balance px-4"
           >
             <span className="text-white">Share Secrets.</span>
             <br />
@@ -95,7 +95,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-12 leading-relaxed font-light text-balance"
+            className="text-base sm:text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed font-light text-balance px-4"
           >
             Production-grade encryption for your .env files. <br className="hidden sm:block" />
             No servers. No logs. Just pure AES-256-GCM.
@@ -106,15 +106,15 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 md:mb-24 px-4"
           >
             <Link 
               href="/docs/install"
-              className="h-12 px-8 rounded-full bg-gradient-to-b from-orange-500 to-orange-600 text-white font-medium flex items-center justify-center gap-2 hover:shadow-[0_0_20px_-5px_rgba(255,85,0,0.4)] transition-all active:scale-95"
+              className="w-full sm:w-auto h-12 px-8 rounded-full bg-gradient-to-b from-orange-500 to-orange-600 text-white font-medium flex items-center justify-center gap-2 hover:shadow-[0_0_20px_-5px_rgba(255,85,0,0.4)] transition-all active:scale-95"
             >
               Install for Free
             </Link>
-            <button className="h-12 px-8 rounded-full text-white/70 hover:text-white font-medium flex items-center justify-center gap-2 transition-colors group">
+            <button className="w-full sm:w-auto h-12 px-8 rounded-full text-white/70 hover:text-white font-medium flex items-center justify-center gap-2 transition-colors group">
               <span className="border-b border-white/0 group-hover:border-white/40 transition-all">Watch Demo</span>
               <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                 <div className="w-0 h-0 border-t-[3px] border-t-transparent border-l-[6px] border-l-white border-b-[3px] border-b-transparent ml-0.5" />
@@ -127,10 +127,10 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative mx-auto max-w-4xl"
+            className="relative mx-auto max-w-4xl px-2 md:px-0"
           >
             <div className="absolute -inset-px bg-gradient-to-b from-white/10 to-transparent rounded-xl pointer-events-none" />
-            <div className="bg-[#0A0A0A]/80 backdrop-blur-xl rounded-xl border border-white/[0.08] shadow-2xl p-2">
+            <div className="bg-[#0A0A0A]/80 backdrop-blur-xl rounded-xl border border-white/[0.08] shadow-2xl p-1 md:p-2">
               <TerminalDemo />
             </div>
             
@@ -140,8 +140,8 @@ export default function Home() {
         </section>
 
         {/* Trusted By (Muted) */}
-        <section className="text-center mb-40">
-          <p className="text-xs font-semibold text-white/20 uppercase tracking-widest mb-10">Trusted by security teams at</p>
+        <section className="text-center mb-32 md:mb-40 px-6">
+          <p className="text-xs font-semibold text-white/20 uppercase tracking-widest mb-8 md:mb-10">Trusted by security teams at</p>
           <div className="flex flex-wrap justify-center gap-12 sm:gap-20 opacity-30 grayscale hover:grayscale-0 hover:opacity-60 transition-all duration-700">
             {['Acme Corp', 'GlobalBank', 'Nebula', 'LightBox', 'Vercel'].map(brand => (
               <span key={brand} className="text-lg font-bold flex items-center gap-2 text-white">

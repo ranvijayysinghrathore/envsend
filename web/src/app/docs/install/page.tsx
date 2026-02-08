@@ -153,7 +153,7 @@ export default function InstallPage() {
                         <Terminal className="w-4 h-4" />
                         Homebrew (Coming Soon)
                       </h3>
-                      <div className="font-mono text-sm text-white/30 select-all bg-white/5 p-4 rounded-lg">
+                      <div className="font-mono text-sm text-white/30 select-all bg-white/5 p-4 rounded-lg whitespace-pre-wrap break-all">
                         brew install envsend
                       </div>
                     </div>
@@ -162,9 +162,9 @@ export default function InstallPage() {
                       <h3 className="text-sm font-medium text-white/60 mb-4">Manual Installation</h3>
                       <div className="font-mono text-sm text-white/80 space-y-2 bg-white/5 p-4 rounded-lg">
                         <p className="text-white/40"># Build from source (requires Go 1.21+)</p>
-                        <p>git clone https://github.com/ranvijayysinghrathore/envsend</p>
+                        <p className="whitespace-pre-wrap break-all">git clone https://github.com/ranvijayysinghrathore/envsend</p>
                         <p>cd envsend/cli</p>
-                        <p>sudo go build -o /usr/local/bin/envsend .</p>
+                        <p className="whitespace-pre-wrap break-all">sudo go build -o /usr/local/bin/envsend .</p>
                       </div>
                     </div>
                   </div>
@@ -184,8 +184,8 @@ export default function InstallPage() {
                       <div className="flex items-center justify-between font-mono text-sm text-white/80 bg-white/5 p-4 rounded-lg group hover:bg-white/10 transition-colors cursor-pointer"
                            onClick={() => navigator.clipboard.writeText("curl -fsSL https://envsend.io/install.sh | bash")}
                       >
-                        <span>curl -fsSL https://envsend.io/install.sh | bash</span>
-                        <Command className="w-4 h-4 text-white/20 group-hover:text-white transition-colors" />
+                        <span className="whitespace-pre-wrap break-all mr-2">curl -fsSL https://envsend.io/install.sh | bash</span>
+                        <Command className="w-4 h-4 text-white/20 group-hover:text-white transition-colors shrink-0" />
                       </div>
                     </div>
 
@@ -193,7 +193,7 @@ export default function InstallPage() {
                       <h3 className="text-sm font-medium text-white/60 mb-4">Build from Source</h3>
                       <div className="font-mono text-sm text-white/80 space-y-2 bg-white/5 p-4 rounded-lg">
                         <p className="text-white/40"># Requires Go 1.21+</p>
-                        <p>go install github.com/ranvijayysinghrathore/envsend/cli@latest</p>
+                        <p className="whitespace-pre-wrap break-all">go install github.com/ranvijayysinghrathore/envsend/cli@latest</p>
                       </div>
                     </div>
                   </div>
